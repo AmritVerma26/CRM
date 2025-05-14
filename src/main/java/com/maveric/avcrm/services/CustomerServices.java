@@ -11,6 +11,8 @@ public interface CustomerServices {
 
     void updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException;
 
+    List<Customer> getAllCustomersDetails() throws CustomerDetailsNotFoundException;
+
     void removeCustomerDetailsById(int id) throws CustomerDetailsNotFoundException;
 
     Customer getCustomerDetailsById(int id) throws CustomerDetailsNotFoundException;

@@ -17,7 +17,6 @@ public class CustomerController {
     @Autowired
     CustomerServices customerServices;
 
-
     //Create Customer
     @PostMapping(value = "/v1/customer" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> acceptCustomerDetails(@RequestBody Customer customerToBeInsert){
@@ -52,5 +51,25 @@ public class CustomerController {
         List<Customer> customersToBeFound = customerServices.getCustomerDetailsByGender(gender);
         return new ResponseEntity<>(customersToBeFound,HttpStatus.OK);
     }
+
+    //Get All Customers
+    @GetMapping(value = "/v1/customers")
+    public ResponseEntity <List<Customer>> getAllCustomers() throws CustomerDetailsNotFoundException {
+        List<Customer> allCustomers = customerServices.getAllCustomersDetails();
+        return new ResponseEntity<>(allCustomers, HttpStatus.OK);
+    }
+
+    //Update the Customer by id
+    @PutMapping(value = "/v1/customer/update/{id}")
+    public ResponseEntity<String> updateCustomerDetails(@PathVariable int id, @RequestBody Customer customer) throws CustomerDetailsNotFoundException {
+        // Set the customer ID to ensure that the correct customer is being updated
+        customer.setId(id);
+        // Call the service to update the customer details
+        customerServices.updateCustomerDetails(customer);
+        // Return a success message
+        return new ResponseEntity<>("Customer details updated successfully.", HttpStatus.OK);
+    }
+
+
 
 }

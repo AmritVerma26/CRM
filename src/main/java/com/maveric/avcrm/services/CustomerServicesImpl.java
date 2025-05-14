@@ -27,6 +27,16 @@ public class CustomerServicesImpl implements CustomerServices{
     }
 
     @Override
+    public List<Customer> getAllCustomersDetails() throws CustomerDetailsNotFoundException {
+        List<Customer> customers = customerRepository.findAll();
+        if (customers.isEmpty()) {
+            throw new CustomerDetailsNotFoundException("No customers found.");
+        }
+        return customers;
+    }
+
+
+    @Override
     public void removeCustomerDetailsById(int id) throws CustomerDetailsNotFoundException {
         this.getCustomerDetailsById(id);
         customerRepository.deleteById(id);
