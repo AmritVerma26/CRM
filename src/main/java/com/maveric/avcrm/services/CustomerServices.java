@@ -1,0 +1,22 @@
+package com.maveric.avcrm.services;
+
+import com.maveric.avcrm.exceptions.CustomerDetailsNotFoundException;
+import com.maveric.avcrm.pojos.Customer;
+
+import java.util.List;
+
+public interface CustomerServices {
+
+    Customer acceptCustomerDetails(Customer customer);
+
+    void updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException;
+
+    void removeCustomerDetailsById(int id) throws CustomerDetailsNotFoundException;
+
+    Customer getCustomerDetailsById(int id) throws CustomerDetailsNotFoundException;
+
+    List<Customer> getCustomerDetailsByAge(int age) throws CustomerDetailsNotFoundException;
+
+    List<Customer> getCustomerDetailsByGender(String gender) throws CustomerDetailsNotFoundException;
+
+}
