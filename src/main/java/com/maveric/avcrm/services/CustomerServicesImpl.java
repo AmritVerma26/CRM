@@ -49,7 +49,7 @@ public class CustomerServicesImpl implements CustomerServices{
     @Override
     public List<Customer> getCustomerDetailsByGender(String gender) throws CustomerDetailsNotFoundException {
         List<Customer> customers = customerRepository.findByGender(gender);
-        if (customers.isEmpty()) throw new CustomerDetailsNotFoundException("Customer with gender : " +gender + " not found.");
+        if (customers.isEmpty()) throw new CustomerDetailsNotFoundException("Customer : " +gender + " not found.");
         return customers;
     }
 }
