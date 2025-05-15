@@ -1,4 +1,4 @@
-package com.maveric.tests;
+package com.maveric.crm.tests;
 
 import com.maveric.crm.exceptions.CustomerDetailsNotFoundException;
 import com.maveric.crm.pojos.Customer;
@@ -16,7 +16,6 @@ class CrmAppApplicationTests {
 	@Autowired
 	CustomerServices customerServices;
 
-	//Test for checking the customer acceptance
 	@Test
 	@Order(1)
 	void testCustomerAcceptance() {
@@ -27,7 +26,6 @@ class CrmAppApplicationTests {
 		Assertions.assertNotNull(customerServices.acceptCustomerDetails(new Customer("Vinay" , "Mallik" , "vm@gmail.com","Male", 25)));
 	}
 
-	//Test for checking the records with valid id
 	@Test
 	@Order(2)
 	void testCustomerById_Positive() throws CustomerDetailsNotFoundException {
@@ -41,7 +39,6 @@ class CrmAppApplicationTests {
 	}
 
 
-   //Test for checking the valid first name from the records.
 	@Test
 	@Order(4)
 	void validFirstName_Positive() throws CustomerDetailsNotFoundException {
@@ -50,14 +47,12 @@ class CrmAppApplicationTests {
 		assertEquals(expectedCustomer,actualCustomer);
 	}
 
-	//Test for checking the first name which is not in the records.
 	@Test
 	@Order(5)
 	void invalidFirstName_Negative(){
 		Assertions.assertThrows(CustomerDetailsNotFoundException.class, ()-> customerServices.getCustomerByFirstName("hello"));
 	}
 
-	//Test for checking the valid last name from the records.
 	@Test
 	@Order(6)
 	void validLastName_Positive() {
@@ -66,7 +61,6 @@ class CrmAppApplicationTests {
 		assertEquals(expectedCustomer,actualCustomer);
 	}
 
-	//Test for checking the last name which is not in the records.
 	@Test
 	@Order(7)
 	void invalidLastName_Negative(){
@@ -74,7 +68,6 @@ class CrmAppApplicationTests {
 	}
 
 
-    //Test for updating the Customer Details with existing records.
 	@Test
 	@Order(8)
 	void updateCustomerDetails_Positive() throws CustomerDetailsNotFoundException {
@@ -84,7 +77,6 @@ class CrmAppApplicationTests {
 		assertEquals("Amrit Updated", customerServices.getCustomerDetailsById(1).getFirstName());
 	}
 
-	//Test for updating the Customer Details for non-existing records.
 	@Test
 	@Order(9)
 	void updateCustomerDetails_Negative() {
@@ -93,7 +85,6 @@ class CrmAppApplicationTests {
 	}
 
 
-    //Test for removing the Customer Details
 	@Test
 	@Order(10)
 	void removeCustomerDetailsById_Positive() throws CustomerDetailsNotFoundException {
