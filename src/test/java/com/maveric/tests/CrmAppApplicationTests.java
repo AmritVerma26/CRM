@@ -27,7 +27,6 @@ class CrmAppApplicationTests {
 		Assertions.assertNotNull(customerServices.acceptCustomerDetails(new Customer("Vinay" , "Mallik" , "vm@gmail.com","Male", 25)));
 	}
 
-
 	//Test for checking the records with valid id
 	@Test
 	@Order(2)
