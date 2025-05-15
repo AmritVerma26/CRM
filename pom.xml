@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.maveric</groupId>
-	<artifactId>crm</artifactId>
+	<artifactId>crmapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CRMApp</name>
 	<description>Capstone Project</description>
