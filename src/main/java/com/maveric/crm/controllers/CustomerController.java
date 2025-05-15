@@ -58,7 +58,6 @@ public class CustomerController {
         return new ResponseEntity<>(allCustomers, HttpStatus.OK);
     }
 
-
     @PutMapping("/v1/customer/update/{customer}")
     public ResponseEntity<String> updateCustomerDetails(@RequestBody Customer customer) throws CustomerDetailsNotFoundException {
         customerServices.updateCustomerDetails(customer);

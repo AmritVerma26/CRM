@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CustomerExceptionHandler {
 
     @ExceptionHandler(CustomerDetailsNotFoundException.class)
-    public ResponseEntity<String> handleEmployeeDetailsNotFoundException(CustomerDetailsNotFoundException e){
+    public ResponseEntity<String> handleCustomerDetailsNotFoundException(CustomerDetailsNotFoundException e){
         ResponseEntity<String> responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         return responseEntity;
     }
