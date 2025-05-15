@@ -78,12 +78,9 @@ class CrmAppApplicationTests {
 	@Test
 	@Order(8)
 	void updateCustomerDetails_Positive() throws CustomerDetailsNotFoundException {
-		// Assuming customer with ID 1 exists
 		Customer customerToUpdate = customerServices.getCustomerDetailsById(1);
 		customerToUpdate.setFirstName("Amrit Updated");
 		customerServices.updateCustomerDetails(customerToUpdate);
-
-		// Validate if the first name is updated
 		assertEquals("Amrit Updated", customerServices.getCustomerDetailsById(1).getFirstName());
 	}
 
