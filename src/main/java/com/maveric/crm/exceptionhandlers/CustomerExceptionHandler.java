@@ -1,6 +1,6 @@
-package com.maveric.avcrm.exceptionhandlers;
+package com.maveric.crm.exceptionhandlers;
 
-import com.maveric.avcrm.exceptions.CustomerDetailsNotFoundException;
+import com.maveric.crm.exceptions.CustomerDetailsNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

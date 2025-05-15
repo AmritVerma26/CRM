@@ -1,8 +1,8 @@
-package com.maveric.avcrm.services;
+package com.maveric.crm.services;
 
-import com.maveric.avcrm.exceptions.CustomerDetailsNotFoundException;
-import com.maveric.avcrm.pojos.Customer;
-import com.maveric.avcrm.repositories.CustomerRepository;
+import com.maveric.crm.exceptions.CustomerDetailsNotFoundException;
+import com.maveric.crm.pojos.Customer;
+import com.maveric.crm.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class CustomerServicesImpl implements CustomerServices{
     }
 
     @Override
-    public List<Customer> getAllCustomersDetails() throws CustomerDetailsNotFoundException {
+    public List<Customer> getAllCustomers() throws CustomerDetailsNotFoundException {
         List<Customer> customers = customerRepository.findAll();
         if (customers.isEmpty()) {
             throw new CustomerDetailsNotFoundException("No customers found.");
@@ -59,7 +59,7 @@ public class CustomerServicesImpl implements CustomerServices{
     @Override
     public List<Customer> getCustomerDetailsByGender(String gender) throws CustomerDetailsNotFoundException {
         List<Customer> customers = customerRepository.findByGender(gender);
-        if (customers.isEmpty()) throw new CustomerDetailsNotFoundException("Customer having : " +gender + " not found.");
+        if (customers.isEmpty()) throw new CustomerDetailsNotFoundException("No customers found for the gender : " +gender);
         return customers;
     }
 }

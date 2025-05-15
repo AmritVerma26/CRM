@@ -1,4 +1,4 @@
-package com.maveric.avcrm.pojos;
+package com.maveric.crm.pojos;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

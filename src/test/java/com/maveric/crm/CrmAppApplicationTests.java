@@ -1,4 +1,4 @@
-package com.maveric.avcrm;
+package com.maveric.crm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.maveric.avcrm.exceptions;
+package com.maveric.crm.exceptions;
 
 public class CustomerDetailsNotFoundException extends RuntimeException {
 

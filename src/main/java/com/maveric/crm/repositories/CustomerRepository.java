@@ -1,6 +1,6 @@
-package com.maveric.avcrm.repositories;
+package com.maveric.crm.repositories;
 
-import com.maveric.avcrm.pojos.Customer;
+import com.maveric.crm.pojos.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
