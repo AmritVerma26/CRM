@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -14,10 +15,25 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull(message = "First Name is mandatory")
+    @Size(min = 1, message = "First Name must not be empty")
     private String firstName;
+
+    @NotNull(message = "Last Name is mandatory")
+    @Size(min = 1, message = "Last Name must not be empty")
     private String lastName;
+
+    @NotNull(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
     private String emailId;
+
+    @NotNull(message = "Gender is mandatory")
     private String gender;
+
+    @NotNull(message = "Age is mandatory")
+    @Min(value = 18, message = "Age must be greater than or equal to 18")
+    @Max(value = 100, message = "Age must be less than or equal to 100")
     private int age;
 
     public Customer(int id, String firstName, String lastName, String emailId, String gender, int age) {

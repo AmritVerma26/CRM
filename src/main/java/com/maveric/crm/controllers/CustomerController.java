@@ -3,10 +3,12 @@ package com.maveric.crm.controllers;
 import com.maveric.crm.exceptions.CustomerDetailsNotFoundException;
 import com.maveric.crm.pojos.Customer;
 import com.maveric.crm.services.CustomerServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class CustomerController {
 
     //Create Customer
     @PostMapping(value = "/v1/customer" , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> acceptCustomerDetails(@RequestBody Customer customerToBeInsert){
+    public ResponseEntity<Customer> acceptCustomerDetails(@Valid @RequestBody Customer customerToBeInsert){
        return  new ResponseEntity<>(customerServices.acceptCustomerDetails(customerToBeInsert), HttpStatus.CREATED);
     }
 
@@ -59,9 +61,10 @@ public class CustomerController {
     }
 
     @PutMapping("/v1/customer/update/{customer}")
-    public ResponseEntity<String> updateCustomerDetails(@RequestBody Customer customer) throws CustomerDetailsNotFoundException {
+    public ResponseEntity<String> updateCustomerDetails(@Valid @RequestBody Customer customer) throws CustomerDetailsNotFoundException {
         customerServices.updateCustomerDetails(customer);
         return new ResponseEntity<>("Successfully Updated",HttpStatus.OK);
     }
+
 
 }
