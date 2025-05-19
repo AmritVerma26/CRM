@@ -60,11 +60,27 @@ public class CustomerController {
         return new ResponseEntity<>(allCustomers, HttpStatus.OK);
     }
 
+    //Update Customer
     @PutMapping("/v1/customer/update/{customer}")
     public ResponseEntity<String> updateCustomerDetails(@Valid @RequestBody Customer customer) throws CustomerDetailsNotFoundException {
         customerServices.updateCustomerDetails(customer);
         return new ResponseEntity<>("Successfully Updated",HttpStatus.OK);
     }
+
+    //Find By First Name
+    @GetMapping(value = "/v1/customer/firstName/{firstName}")
+    public ResponseEntity <List<Customer>> getCustomerByFirstName(@PathVariable String firstName) throws CustomerDetailsNotFoundException {
+        List<Customer> customerByFirstName = customerServices.getAllCustomers();
+        return new ResponseEntity<>(customerByFirstName, HttpStatus.OK);
+    }
+
+    //Find By First Name
+    @GetMapping(value = "/v1/customer/lastName/{lastName}")
+    public ResponseEntity <List<Customer>> getCustomerByLastName(@PathVariable String lastName) throws CustomerDetailsNotFoundException {
+        List<Customer> customerByLastName = customerServices.getAllCustomers();
+        return new ResponseEntity<>(customerByLastName, HttpStatus.OK);
+    }
+
 
 
 }

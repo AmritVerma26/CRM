@@ -21,9 +21,9 @@ public class CustomerServicesImpl implements CustomerServices{
     }
 
     @Override
-    public void updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException {
+    public Customer updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException {
         this.getCustomerDetailsById(customer.getId());
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -64,20 +64,18 @@ public class CustomerServicesImpl implements CustomerServices{
     }
 
     @Override
-    public Customer getCustomerByFirstName(String firstName) throws CustomerDetailsNotFoundException {
-        Customer customers = customerRepository.findByFirstName(firstName);
-        if (customers == null) {
+    public List<Customer> getCustomerByFirstName(String firstName) throws CustomerDetailsNotFoundException {
+        List<Customer> customers = customerRepository.findByFirstName(firstName);
+        if (customers.isEmpty())
             throw new CustomerDetailsNotFoundException("Customer with first name " + firstName + " not found");
-        }
         return customers;
     }
 
     @Override
-    public Customer getCustomerByLastName(String lastName) throws CustomerDetailsNotFoundException {
-        Customer customers = customerRepository.findByLastName(lastName);
-        if (customers == null) {
+    public List<Customer> getCustomerByLastName(String lastName) throws CustomerDetailsNotFoundException {
+        List<Customer> customers = customerRepository.findByLastName(lastName);
+        if (customers.isEmpty())
             throw new CustomerDetailsNotFoundException("No customers found with Last Name: " + lastName);
-        }
         return customers;
     }
 }

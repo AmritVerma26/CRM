@@ -36,6 +36,8 @@ public class Customer {
     @Max(value = 100, message = "Age must be less than or equal to 100")
     private int age;
 
+    public Customer(){}
+
     public Customer(int id, String firstName, String lastName, String emailId, String gender, int age) {
         this.id = id;
         this.firstName = firstName;
@@ -44,7 +46,7 @@ public class Customer {
         this.gender = gender;
         this.age = age;
     }
-    public Customer(){}
+
 
     public Customer(String firstName, String lastName, String emailId, String gender, int age) {
 
