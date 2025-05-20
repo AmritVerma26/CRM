@@ -41,6 +41,7 @@ public class CrmAppApplicationTests {
 		Customer customer1 = new Customer(1, "Amrit", "Verma", "av@gmail.com", "Male", 23);
 		Customer customer2 = new Customer(2, "Ram", "Kumar", "rk@gmail.com", "Male", 30);
 		Customer customer3 = new Customer(3, "Shyam,", "Patel", "sp@gmail.com", "Male", 36);
+		Customer customer4 = new Customer(4,"Reeya","C","reeyac@gmail.com","Female",20);
 
 		//save
 		Mockito.when(customerRepository.save(new Customer("Amrit", "Verma","av@gmail.com", "Male", 23))).thenReturn(customer1);
@@ -51,6 +52,7 @@ public class CrmAppApplicationTests {
 		Mockito.when(customerRepository.findById(1)).thenReturn(Optional.of(customer1));
 		Mockito.when(customerRepository.findById(2)).thenReturn(Optional.of(customer2));
 		Mockito.when(customerRepository.findById(3)).thenReturn(Optional.of(customer3));
+		Mockito.when(customerRepository.findById(4)).thenReturn(Optional.of(customer4));
 		Mockito.when(customerRepository.findById(100)).thenReturn(Optional.ofNullable(null));
 
 		//findAll
@@ -59,15 +61,24 @@ public class CrmAppApplicationTests {
 
 		//findByFirstName
 		Mockito.when(customerRepository.findByFirstName("Shyam")).thenReturn(List.of(customer3));
-		Mockito.when(customerRepository.findByFirstName("abc")).thenReturn(Collections.emptyList());
+		Mockito.when(customerRepository.findByFirstName("hello")).thenReturn(Collections.emptyList());
 
 		//findByLastName
 		Mockito.when(customerRepository.findByLastName("Verma")).thenReturn(List.of(customer1));
-		Mockito.when(customerRepository.findByLastName("Casga")).thenReturn(emptyList());
+		Mockito.when(customerRepository.findByLastName("Pandey")).thenReturn(emptyList());
+
+		//findByAge
+		Mockito.when(customerRepository.findByAge(23)).thenReturn(List.of(customer1));
+		Mockito.when(customerRepository.findByAge(98)).thenReturn((Collections.emptyList()));
+
+		//findByGender
+		Mockito.when(customerRepository.findByGender("Male")).thenReturn(List.of(customer1,customer2, customer3));
+		Mockito.when(customerRepository.findByGender("Female")).thenReturn(List.of(customer4));
+		Mockito.when(customerRepository.findByGender("none")).thenReturn(Collections.emptyList());
 
 		//update
-		Customer updatedCustomer = new Customer(2,"Reeya","C","reeyac@gmail.com","Female",20);
-		Mockito.when(customerRepository.save( new Customer(2,"Reeya","C","reeyac@gmail.com","Female",20))).thenReturn(updatedCustomer);
+		Customer updatedCustomer = new Customer(4,"Reeya","C","reeyac@gmail.com","Female",20);
+		Mockito.when(customerRepository.save( new Customer(4,"Reeya","C","reeyac@gmail.com","Female",20))).thenReturn(updatedCustomer);
 		Mockito.when(customerRepository.save( new Customer(99,"Reeya","C","reeyac@gmail.com","Female",20))).thenReturn(null);
 
 		//deleteById
@@ -138,34 +149,87 @@ public class CrmAppApplicationTests {
 
 	@Test
 	@Order(8)
+	void getCustomersByAge_Positive() throws CustomerDetailsNotFoundException {
+		List<Customer> expected = List.of(new Customer(1, "Amrit", "Verma","av@gmail.com","Male",  23));
+		Assertions.assertEquals(expected, customerServices.getCustomerDetailsByAge(23));
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findByAge(23);
+	}
+
+	@Test
+	@Order(9)
+	void getAllCustomersByAge_Negative() {
+		Assertions.assertThrows(CustomerDetailsNotFoundException.class, () -> customerServices.getCustomerDetailsByAge(98));
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findByAge(98);
+	}
+
+	@Test
+	@Order(10)
+	void testGetAllCustomersByGender_Positive() throws CustomerDetailsNotFoundException {
+		List<Customer> maleExpected = List.of(
+
+				new Customer (1, "Amrit", "Verma", "av@gmail.com", "Male", 23),
+				new Customer(2, "Ram", "Kumar", "rk@gmail.com", "Male", 30),
+				new Customer (3, "Shyam,", "Patel", "sp@gmail.com", "Male", 36)
+		);
+		List<Customer> femaleExpected = List.of(
+				new Customer(4,"Reeya","C","reeyac@gmail.com","Female",20)
+		);
+
+		Assertions.assertEquals(maleExpected, customerServices.getCustomerDetailsByGender("Male"));
+		Assertions.assertEquals(femaleExpected, customerServices.getCustomerDetailsByGender("Female"));
+
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findByGender("Male");
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findByGender("Female");
+	}
+
+	@Test
+	@Order(11)
+	void testGetAllCustomersByGender_Negative() {
+		Assertions.assertThrows(CustomerDetailsNotFoundException.class, () -> customerServices.getCustomerDetailsByGender("none"));
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findByGender("none");
+	}
+
+
+	@Test
+	@Order(12)
 	void updateCustomerDetails_Positive() throws CustomerDetailsNotFoundException {
-		Customer existingCustomer = new Customer(2,"Reeya","C","reeyac@gmail.com","Female",20);
+		Customer existingCustomer = new Customer(4,"Reeya","C","reeyac@gmail.com","Female",20);
 		Assertions.assertEquals(existingCustomer, customerServices.updateCustomerDetails(existingCustomer));
 		Mockito.verify(customerRepository, Mockito.atLeastOnce()).save(existingCustomer);
 	}
 
 	@Test
-	@Order(9)
+	@Order(13)
 	void updateCustomerDetails_Negative() {
 		Customer nonExistentCustomer = new Customer(999,"Reeya","C","reeyac@gmail.com","Female",20);
 		Assertions.assertThrows(CustomerDetailsNotFoundException.class, ()-> customerServices.updateCustomerDetails(nonExistentCustomer));
 		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findById(999);
-
 	}
 
 
 	@Test
-	@Order(10)
+	@Order(14)
 	void removeCustomerDetailsById_Positive() throws CustomerDetailsNotFoundException {
 	    customerServices.removeCustomerDetailsById(2);
 		Mockito.verify(customerRepository, Mockito.atLeastOnce()).deleteById(2);
 	}
 
 	@Test
-	@Order(11)
+	@Order(15)
 	void removeCustomerDetailsById_Negative() {
 		Assertions.assertThrows(CustomerDetailsNotFoundException.class, ()-> customerServices.removeCustomerDetailsById(999));
 		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findById(999);
+	}
+	@Test
+	@Order(16)
+	void getAllCustomers_Positive() throws CustomerDetailsNotFoundException {
+		List<Customer> expected = List.of(
+				new Customer (1, "Amrit", "Verma", "av@gmail.com", "Male", 23),
+				new Customer (2, "Ram", "Kumar", "rk@gmail.com", "Male", 30),
+				new Customer (3, "Shyam,", "Patel", "sp@gmail.com", "Male", 36)
+		);
+		Assertions.assertEquals(expected, customerServices.getAllCustomers());
+		Mockito.verify(customerRepository, Mockito.atLeastOnce()).findAll();
 	}
 
 }
