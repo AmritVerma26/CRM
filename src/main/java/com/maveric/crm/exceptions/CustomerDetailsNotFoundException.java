@@ -1,6 +1,9 @@
 package com.maveric.crm.exceptions;
 
-public class CustomerDetailsNotFoundException extends RuntimeException {
+public class CustomerDetailsNotFoundException extends Exception {
+    public CustomerDetailsNotFoundException() {
+        super();
+    }
 
     public CustomerDetailsNotFoundException(String message) {
         super(message);
@@ -14,7 +17,7 @@ public class CustomerDetailsNotFoundException extends RuntimeException {
         super(cause);
     }
 
-    public CustomerDetailsNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected CustomerDetailsNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
